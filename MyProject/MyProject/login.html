@@ -1,21 +1,40 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ورود به سایت</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title data-lang-fa="ورود" data-lang-en="Login">ورود</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-    <div class="form-container">
-        <h2>ورود به حساب کاربری</h2>
-        <form id="loginForm">
-            <input type="email" placeholder="ایمیل" required>
-            <input type="password" placeholder="رمز عبور" required>
-            <button type="submit">ورود</button>
-        </form>
-        <p>حساب کاربری نداری؟ <a href="signup.html">ثبت نام</a></p>
-        <p><a href="forgot.html">فراموشی رمز عبور؟</a></p>
+<body dir="rtl">
+  <header class="header container">
+    <div class="brand" data-lang-fa="وبسایت پوپ" data-lang-en="Pop Game">وبسایت پوپ</div>
+    <div class="lang-wrap">
+      <label for="language-selector" data-lang-fa="زبان" data-lang-en="Language">زبان</label>
+      <select id="language-selector">
+        <option value="fa">فارسی</option>
+        <option value="en">English</option>
+      </select>
     </div>
+  </header>
+
+  <main class="container">
+    <div class="form-container" style="max-width:420px;margin:auto">
+      <h2 data-lang-fa="ورود به حساب کاربری" data-lang-en="Sign in to your account">ورود به حساب کاربری</h2>
+
+      <form id="loginForm">
+        <input type="email" id="email" data-placeholder-fa="ایمیل" data-placeholder-en="Email" placeholder="ایمیل" required>
+        <input type="password" id="password" data-placeholder-fa="رمز عبور" data-placeholder-en="Password" placeholder="رمز عبور" required>
+        <button type="submit" data-value-fa="ورود" data-value-en="Login">ورود</button>
+      </form>
+
+      <p style="margin-top:12px">
+        <a href="signup.html" data-lang-fa="ثبت نام" data-lang-en="Sign Up">ثبت نام</a> |
+        <a href="forgot.html" data-lang-fa="فراموشی رمز عبور؟" data-lang-en="Forgot password?">فراموشی رمز عبور؟</a>
+      </p>
+    </div>
+  </main>
+
+  <script src="js/main.js"></script>
 </body>
 </html>
