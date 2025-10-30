@@ -1,139 +1,124 @@
-// 🎮 نسخه نئون بازی پوپ با تایمر و صداهای معتبر 🔊
+// pop-game.js
+document.addEventListener('DOMContentLoaded', () => {
 
-const board = document.getElementById("game-board");
-const result = document.getElementById("result");
-const restartBtn = document.getElementById("restart-btn");
+  const rows = [
+    { correct: 3, wrong: 1, multiplier: 1.2 },
+    { correct: 3, wrong: 1, multiplier: 1.3 },
+    { correct: 2, wrong: 2, multiplier: 1.6 },
+    { correct: 2, wrong: 2, multiplier: 1.8 },
+    { correct: 1, wrong: 3, multiplier: 2.0 }
+  ];
 
-let score = 0;
-let gameOver = false;
-let currentRow = 0;
-let timerInterval;
-let choiceTimer;
+  let currentRow = 0;
+  let score = 0;
+  let canClick = true;
 
-// سطح‌های بازی (از پایین به بالا)
-const levels = [
-  { name: "ردیف 1", correct: 1, total: 4, multiplier: 1.10 },
-  { name: "ردیف 2", correct: 2, total: 4, multiplier: 1.20 },
-  { name: "ردیف 3", correct: 2, total: 4, multiplier: 1.50 }
-];
+  const gameContainer = document.getElementById('pop-game');
 
-// صداهای معتبر از منابع Google & FreeSound
-const coinSound = new Audio("https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg");
-const poopSound = new Audio("https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg");
+  // صداها
+  const soundCorrect = new Audio('sounds/correct.mp3'); // از لینک قبلی استفاده کن
+  const soundWrong = new Audio('sounds/wrong.mp3');
 
-function startGame() {
-  board.innerHTML = "";
-  result.textContent = "";
-  score = 0;
-  gameOver = false;
-  currentRow = 0;
-  updateScore();
-  playLevel(currentRow);
-}
-
-function playLevel(rowIndex) {
-  if (rowIndex >= levels.length || gameOver) {
-    result.textContent = `🎉 بازی تمام شد! امتیاز نهایی: ${score.toFixed(2)}`;
-    return;
+  // پاک کردن بازی قبلی
+  function clearGame() {
+    gameContainer.innerHTML = '';
   }
 
-  const level = levels[rowIndex];
-  board.innerHTML = `
-    <h2>${level.name} (ضریب ${level.multiplier})</h2>
-  `;
+  // ایجاد خانه‌ها برای ردیف فعلی
+  function createRow(rowData, rowIndex) {
+    const rowDiv = document.createElement('div');
+    rowDiv.className = 'pop-row';
+    rowDiv.dataset.row = rowIndex;
 
-  const row = document.createElement("div");
-  row.classList.add("row");
+    // جمع تعداد خانه‌ها
+    const total = rowData.correct + rowData.wrong;
 
-  const correctIndexes = new Set();
-  while (correctIndexes.size < level.correct) {
-    correctIndexes.add(Math.floor(Math.random() * level.total));
-  }
+    // آرایه گزینه‌ها
+    const options = [];
+    for (let i = 0; i < rowData.correct; i++) options.push('correct');
+    for (let i = 0; i < rowData.wrong; i++) options.push('wrong');
 
-  for (let i = 0; i < level.total; i++) {
-    const cell = document.createElement("div");
-    cell.classList.add("cell");
-    cell.textContent = "?";
+    // شفل
+    options.sort(() => Math.random() - 0.5);
 
-    cell.addEventListener("click", () => {
-      if (gameOver) return;
-      handleChoice(cell, correctIndexes.has(i), level);
+    options.forEach((type, i) => {
+      const cell = document.createElement('div');
+      cell.className = 'pop-cell';
+      cell.dataset.type = type;
+      cell.textContent = type === 'correct' ? '🤑' : '💩';
+      cell.style.fontSize = '2em';
+      cell.addEventListener('click', () => handleClick(cell, rowData));
+      rowDiv.appendChild(cell);
     });
 
-    row.appendChild(cell);
+    return rowDiv;
   }
 
-  board.appendChild(row);
-  startChoiceTimer(level);
-}
+  // هندل کلیک
+  function handleClick(cell, rowData) {
+    if (!canClick) return;
 
-function handleChoice(cell, isCorrect, level) {
-  clearTimeout(choiceTimer);
+    canClick = false;
 
-  if (isCorrect) {
-    cell.textContent = "🤑";
-    cell.classList.add("correct");
-    coinSound.currentTime = 0;
-    coinSound.play();
+    if (cell.dataset.type === 'correct') {
+      score += rowData.multiplier * 10;
+      soundCorrect.play();
+    } else {
+      soundWrong.play();
+    }
 
-    score += 10 * level.multiplier;
-    updateScore();
-
-    result.textContent = `✅ درست زدی! امتیاز فعلی: ${score.toFixed(2)}`;
-    result.style.color = "#00ff9d";
-
+    // بعد از 0.5 ثانیه، به مرحله بعد می‌رویم یا صبر می‌کنیم
     setTimeout(() => {
       currentRow++;
-      startNextLevel();
-    }, 2000);
-  } else {
-    cell.textContent = "💩";
-    cell.classList.add("wrong");
-    poopSound.currentTime = 0;
-    poopSound.play();
-    result.textContent = `💩 باختی! امتیاز نهایی: ${score.toFixed(2)}`;
-    result.style.color = "#ff5252";
-    gameOver = true;
+      if (currentRow < rows.length) {
+        canClick = true;
+        renderRow();
+      } else {
+        showFinalScore();
+      }
+    }, 500);
   }
-}
 
-function startChoiceTimer(level) {
-  let timeLeft = 5;
-  result.textContent = `🕒 ${timeLeft} ثانیه فرصت داری...`;
+  // رندر ردیف فعلی
+  function renderRow() {
+    clearGame();
+    const rowData = rows[currentRow];
+    const rowDiv = createRow(rowData, currentRow);
+    gameContainer.appendChild(rowDiv);
 
-  choiceTimer = setInterval(() => {
-    timeLeft--;
-    result.textContent = `🕒 ${timeLeft} ثانیه فرصت داری...`;
+    // تایمر 5 ثانیه
+    let timer = 5;
+    const timerDiv = document.createElement('div');
+    timerDiv.className = 'timer';
+    timerDiv.textContent = `زمان باقی مانده: ${timer}s`;
+    gameContainer.appendChild(timerDiv);
 
-    if (timeLeft <= 0) {
-      clearInterval(choiceTimer);
-      result.textContent = `💩 وقت تموم شد! امتیاز نهایی: ${score.toFixed(2)}`;
-      result.style.color = "#ff5252";
-      poopSound.play();
-      gameOver = true;
-    }
-  }, 1000);
-}
+    const interval = setInterval(() => {
+      timer--;
+      timerDiv.textContent = `زمان باقی مانده: ${timer}s`;
+      if (timer <= 0) {
+        clearInterval(interval);
+        currentRow++;
+        if (currentRow < rows.length) {
+          canClick = true;
+          renderRow();
+        } else {
+          showFinalScore();
+        }
+      }
+    }, 1000);
+  }
 
-function startNextLevel() {
-  clearInterval(timerInterval);
-  let countdown = 30;
-  result.textContent = `⏳ ${countdown} ثانیه تا شروع مرحله بعد...`;
+  // نمایش امتیاز نهایی
+  function showFinalScore() {
+    clearGame();
+    const scoreDiv = document.createElement('div');
+    scoreDiv.className = 'final-score';
+    scoreDiv.textContent = `امتیاز شما: ${score.toFixed(1)}`;
+    scoreDiv.style.fontSize = '2em';
+    gameContainer.appendChild(scoreDiv);
+  }
 
-  timerInterval = setInterval(() => {
-    countdown--;
-    result.textContent = `⏳ ${countdown} ثانیه تا شروع مرحله بعد...`;
-    if (countdown <= 0) {
-      clearInterval(timerInterval);
-      playLevel(currentRow);
-    }
-  }, 1000);
-}
-
-function updateScore() {
-  result.textContent = `امتیاز فعلی: ${score.toFixed(2)}`;
-  result.style.color = "#00e5ff";
-}
-
-restartBtn.addEventListener("click", startGame);
-startGame();
+  // شروع بازی
+  renderRow();
+});
