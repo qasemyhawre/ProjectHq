@@ -161,3 +161,67 @@ body {
 .contact-form button:hover {
     background-color: #45a049;
 }
+/* ========================
+   طراحی بازی پوپ
+======================== */
+.pop-game {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.cell {
+    width: 80px;
+    height: 80px;
+    background-color: #2a2a2a;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+    transition: 0.3s;
+    user-select: none;
+}
+
+.cell:hover {
+    background-color: #4caf50;
+}
+
+.cell.correct {
+    background-color: #4caf50;
+}
+
+.cell.wrong {
+    background-color: #ff5252;
+}
+
+.result-text {
+    margin-top: 20px;
+    font-size: 18px;
+    color: #4caf50;
+}
+
+#restart-btn {
+    margin-top: 20px;
+    background-color: #4caf50;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#restart-btn:hover {
+    background-color: #45a049;
+}
