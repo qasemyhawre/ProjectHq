@@ -1,91 +1,139 @@
-// 🎮 بازی پوپ نسخه‌ی امتیازدار با صدا و اموجی‌ها 🤑💩
+// 🎮 نسخه نئون بازی پوپ با تایمر و صداهای معتبر 🔊
 
-// گرفتن عناصر HTML
 const board = document.getElementById("game-board");
 const result = document.getElementById("result");
 const restartBtn = document.getElementById("restart-btn");
 
-// سطح‌های بازی (از پایین به بالا)
-const levels = [
-  { correct: 1, total: 4 }, // ردیف 5 (پایینی)
-  { correct: 2, total: 4 }, // ردیف 4
-  { correct: 2, total: 4 }, // ردیف 3
-  { correct: 3, total: 4 }, // ردیف 2
-  { correct: 3, total: 4 }  // ردیف 1 (بالایی)
-];
-
 let score = 0;
 let gameOver = false;
+let currentRow = 0;
+let timerInterval;
+let choiceTimer;
 
-// 🎵 ایجاد صداها
-const coinSound = new Audio("https://cdn.pixabay.com/audio/2022/03/15/audio_8a1e2f3c3a.mp3"); // صدای پول
-const poopSound = new Audio("https://cdn.pixabay.com/audio/2022/03/15/audio_5f4f0d4a93.mp3"); // صدای پوپ
+// سطح‌های بازی (از پایین به بالا)
+const levels = [
+  { name: "ردیف 1", correct: 1, total: 4, multiplier: 1.10 },
+  { name: "ردیف 2", correct: 2, total: 4, multiplier: 1.20 },
+  { name: "ردیف 3", correct: 2, total: 4, multiplier: 1.50 }
+];
 
-function createGame() {
+// صداهای معتبر از منابع Google & FreeSound
+const coinSound = new Audio("https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg");
+const poopSound = new Audio("https://actions.google.com/sounds/v1/cartoon/cartoon_boing.ogg");
+
+function startGame() {
   board.innerHTML = "";
   result.textContent = "";
   score = 0;
   gameOver = false;
+  currentRow = 0;
+  updateScore();
+  playLevel(currentRow);
+}
 
-  // از پایین به بالا رسم می‌کنیم
-  for (let rowIndex = levels.length - 1; rowIndex >= 0; rowIndex--) {
-    const level = levels[rowIndex];
-    const row = document.createElement("div");
-    row.classList.add("row");
-
-    const correctIndexes = new Set();
-    while (correctIndexes.size < level.correct) {
-      correctIndexes.add(Math.floor(Math.random() * level.total));
-    }
-
-    for (let i = 0; i < level.total; i++) {
-      const cell = document.createElement("div");
-      cell.classList.add("cell");
-
-      cell.addEventListener("click", () => {
-        if (gameOver || cell.classList.contains("correct") || cell.classList.contains("wrong")) return;
-
-        if (correctIndexes.has(i)) {
-          cell.classList.add("correct");
-          cell.textContent = "🤑";
-          coinSound.currentTime = 0;
-          coinSound.play();
-          score += 10;
-        } else {
-          cell.classList.add("wrong");
-          cell.textContent = "💩";
-          poopSound.currentTime = 0;
-          poopSound.play();
-          result.textContent = `💩 باختی! امتیاز نهایی: ${score}`;
-          result.style.color = "#ff5252";
-          gameOver = true;
-        }
-
-        updateScore();
-
-        // بررسی برنده شدن
-        const allCorrect = [...document.querySelectorAll(".cell.correct")].length;
-        const totalCorrect = levels.reduce((sum, l) => sum + l.correct, 0);
-        if (allCorrect === totalCorrect && !gameOver) {
-          result.textContent = `🎉 برنده شدی! امتیاز نهایی: ${score}`;
-          result.style.color = "#4caf50";
-          gameOver = true;
-        }
-      });
-
-      row.appendChild(cell);
-    }
-
-    board.appendChild(row);
+function playLevel(rowIndex) {
+  if (rowIndex >= levels.length || gameOver) {
+    result.textContent = `🎉 بازی تمام شد! امتیاز نهایی: ${score.toFixed(2)}`;
+    return;
   }
 
-  updateScore();
+  const level = levels[rowIndex];
+  board.innerHTML = `
+    <h2>${level.name} (ضریب ${level.multiplier})</h2>
+  `;
+
+  const row = document.createElement("div");
+  row.classList.add("row");
+
+  const correctIndexes = new Set();
+  while (correctIndexes.size < level.correct) {
+    correctIndexes.add(Math.floor(Math.random() * level.total));
+  }
+
+  for (let i = 0; i < level.total; i++) {
+    const cell = document.createElement("div");
+    cell.classList.add("cell");
+    cell.textContent = "?";
+
+    cell.addEventListener("click", () => {
+      if (gameOver) return;
+      handleChoice(cell, correctIndexes.has(i), level);
+    });
+
+    row.appendChild(cell);
+  }
+
+  board.appendChild(row);
+  startChoiceTimer(level);
+}
+
+function handleChoice(cell, isCorrect, level) {
+  clearTimeout(choiceTimer);
+
+  if (isCorrect) {
+    cell.textContent = "🤑";
+    cell.classList.add("correct");
+    coinSound.currentTime = 0;
+    coinSound.play();
+
+    score += 10 * level.multiplier;
+    updateScore();
+
+    result.textContent = `✅ درست زدی! امتیاز فعلی: ${score.toFixed(2)}`;
+    result.style.color = "#00ff9d";
+
+    setTimeout(() => {
+      currentRow++;
+      startNextLevel();
+    }, 2000);
+  } else {
+    cell.textContent = "💩";
+    cell.classList.add("wrong");
+    poopSound.currentTime = 0;
+    poopSound.play();
+    result.textContent = `💩 باختی! امتیاز نهایی: ${score.toFixed(2)}`;
+    result.style.color = "#ff5252";
+    gameOver = true;
+  }
+}
+
+function startChoiceTimer(level) {
+  let timeLeft = 5;
+  result.textContent = `🕒 ${timeLeft} ثانیه فرصت داری...`;
+
+  choiceTimer = setInterval(() => {
+    timeLeft--;
+    result.textContent = `🕒 ${timeLeft} ثانیه فرصت داری...`;
+
+    if (timeLeft <= 0) {
+      clearInterval(choiceTimer);
+      result.textContent = `💩 وقت تموم شد! امتیاز نهایی: ${score.toFixed(2)}`;
+      result.style.color = "#ff5252";
+      poopSound.play();
+      gameOver = true;
+    }
+  }, 1000);
+}
+
+function startNextLevel() {
+  clearInterval(timerInterval);
+  let countdown = 30;
+  result.textContent = `⏳ ${countdown} ثانیه تا شروع مرحله بعد...`;
+
+  timerInterval = setInterval(() => {
+    countdown--;
+    result.textContent = `⏳ ${countdown} ثانیه تا شروع مرحله بعد...`;
+    if (countdown <= 0) {
+      clearInterval(timerInterval);
+      playLevel(currentRow);
+    }
+  }, 1000);
 }
 
 function updateScore() {
-  result.textContent = `امتیاز فعلی: ${score}`;
-  result.style.color = "#4caf50";
+  result.textContent = `امتیاز فعلی: ${score.toFixed(2)}`;
+  result.style.color = "#00e5ff";
 }
 
-restartBtn.addEventListener("click", createGame);
-createGame();
+restartBtn.addEventListener("click", startGame);
+startGame();
