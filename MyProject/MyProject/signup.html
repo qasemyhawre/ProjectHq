@@ -1,22 +1,37 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ثبت نام</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title data-lang-fa="ثبت نام" data-lang-en="Sign Up">ثبت نام</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-    <div class="form-container">
-        <h2>ثبت نام در سایت</h2>
-        <form id="signupForm">
-            <input type="text" placeholder="نام کاربری" required>
-            <input type="email" placeholder="ایمیل" required>
-            <input type="password" placeholder="رمز عبور" required>
-            <input type="password" placeholder="تایید رمز عبور" required>
-            <button type="submit">ثبت نام</button>
-        </form>
-        <p>حساب داری؟ <a href="login.html">ورود</a></p>
+<body dir="rtl">
+  <header class="header container">
+    <div class="brand" data-lang-fa="وبسایت پوپ" data-lang-en="Pop Game">وبسایت پوپ</div>
+    <div class="lang-wrap">
+      <label for="language-selector" data-lang-fa="زبان" data-lang-en="Language">زبان</label>
+      <select id="language-selector">
+        <option value="fa">فارسی</option>
+        <option value="en">English</option>
+      </select>
     </div>
+  </header>
+
+  <main class="container">
+    <div class="form-container" style="max-width:480px;margin:auto">
+      <h2 data-lang-fa="ثبت نام در سایت" data-lang-en="Create account">ثبت نام در سایت</h2>
+      <form id="signupForm">
+        <input type="text" id="username" data-placeholder-fa="نام کاربری" data-placeholder-en="Username" placeholder="نام کاربری" required>
+        <input type="email" id="email" data-placeholder-fa="ایمیل" data-placeholder-en="Email" placeholder="ایمیل" required>
+        <input type="password" id="password" data-placeholder-fa="رمز عبور" data-placeholder-en="Password" placeholder="رمز عبور" required>
+        <input type="password" id="password2" data-placeholder-fa="تایید رمز عبور" data-placeholder-en="Confirm password" placeholder="تایید رمز عبور" required>
+        <button type="submit" data-value-fa="ثبت نام" data-value-en="Sign Up">ثبت نام</button>
+      </form>
+      <p style="margin-top:12px"><a href="login.html" data-lang-fa="حساب داری؟ ورود" data-lang-en="Have an account? Login">حساب داری؟ ورود</a></p>
+    </div>
+  </main>
+
+  <script src="js/main.js"></script>
 </body>
 </html>
