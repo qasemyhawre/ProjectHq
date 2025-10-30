@@ -1,29 +1,38 @@
-// بازی پوپ 🎯
+// 🎮 بازی پوپ نسخه‌ی امتیازدار با صدا و اموجی‌ها 🤑💩
+
+// گرفتن عناصر HTML
 const board = document.getElementById("game-board");
 const result = document.getElementById("result");
 const restartBtn = document.getElementById("restart-btn");
 
-// تنظیمات بازی
+// سطح‌های بازی (از پایین به بالا)
 const levels = [
-  { correct: 3, total: 4 }, // ردیف 1
-  { correct: 3, total: 4 }, // ردیف 2
-  { correct: 2, total: 4 }, // ردیف 3
+  { correct: 1, total: 4 }, // ردیف 5 (پایینی)
   { correct: 2, total: 4 }, // ردیف 4
-  { correct: 1, total: 4 }  // ردیف 5
+  { correct: 2, total: 4 }, // ردیف 3
+  { correct: 3, total: 4 }, // ردیف 2
+  { correct: 3, total: 4 }  // ردیف 1 (بالایی)
 ];
 
+let score = 0;
 let gameOver = false;
+
+// 🎵 ایجاد صداها
+const coinSound = new Audio("https://cdn.pixabay.com/audio/2022/03/15/audio_8a1e2f3c3a.mp3"); // صدای پول
+const poopSound = new Audio("https://cdn.pixabay.com/audio/2022/03/15/audio_5f4f0d4a93.mp3"); // صدای پوپ
 
 function createGame() {
   board.innerHTML = "";
   result.textContent = "";
+  score = 0;
   gameOver = false;
 
-  levels.forEach((level, rowIndex) => {
+  // از پایین به بالا رسم می‌کنیم
+  for (let rowIndex = levels.length - 1; rowIndex >= 0; rowIndex--) {
+    const level = levels[rowIndex];
     const row = document.createElement("div");
     row.classList.add("row");
 
-    // ساختن خانه‌ها
     const correctIndexes = new Set();
     while (correctIndexes.size < level.correct) {
       correctIndexes.add(Math.floor(Math.random() * level.total));
@@ -34,24 +43,31 @@ function createGame() {
       cell.classList.add("cell");
 
       cell.addEventListener("click", () => {
-        if (gameOver) return;
+        if (gameOver || cell.classList.contains("correct") || cell.classList.contains("wrong")) return;
 
         if (correctIndexes.has(i)) {
           cell.classList.add("correct");
-          cell.textContent = "✅";
+          cell.textContent = "🤑";
+          coinSound.currentTime = 0;
+          coinSound.play();
+          score += 10;
         } else {
           cell.classList.add("wrong");
           cell.textContent = "💩";
-          result.textContent = "باختی 😅 روی پوپ زدی!";
+          poopSound.currentTime = 0;
+          poopSound.play();
+          result.textContent = `💩 باختی! امتیاز نهایی: ${score}`;
           result.style.color = "#ff5252";
           gameOver = true;
         }
 
-        // بررسی اگر همه گزینه‌های درست پیدا شدن
+        updateScore();
+
+        // بررسی برنده شدن
         const allCorrect = [...document.querySelectorAll(".cell.correct")].length;
         const totalCorrect = levels.reduce((sum, l) => sum + l.correct, 0);
         if (allCorrect === totalCorrect && !gameOver) {
-          result.textContent = "🎉 برنده شدی!";
+          result.textContent = `🎉 برنده شدی! امتیاز نهایی: ${score}`;
           result.style.color = "#4caf50";
           gameOver = true;
         }
@@ -61,7 +77,14 @@ function createGame() {
     }
 
     board.appendChild(row);
-  });
+  }
+
+  updateScore();
+}
+
+function updateScore() {
+  result.textContent = `امتیاز فعلی: ${score}`;
+  result.style.color = "#4caf50";
 }
 
 restartBtn.addEventListener("click", createGame);
