@@ -1,30 +1,41 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>داشبورد</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title data-lang-fa="داشبورد" data-lang-en="Dashboard">داشبورد</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-    <div class="dashboard-container">
-        <!-- نوار کناری -->
-        <nav class="sidebar">
-            <h2>منوی سایت</h2>
-            <ul>
-                <li><a href="dashboard.html" class="active">صفحه اصلی</a></li>
-                <li><a href="profile.html">صفحه کاربری</a></li>
-                <li><a href="contact.html">ارتباط با ما</a></li>
-                <li><a href="games.html">بازی‌ها</a></li>
-                <li><a href="login.html">خروج</a></li>
-            </ul>
-        </nav>
-
-        <!-- بخش اصلی داشبورد -->
-        <main class="main-content">
-            <h1>خوش آمدی 🌙</h1>
-            <p>به پنل کاربری سایت خوش آمدی. از منوی سمت راست می‌تونی به بخش‌های مختلف سایت بری.</p>
-        </main>
+<body dir="rtl">
+  <header class="header container">
+    <div class="brand" data-lang-fa="وبسایت پوپ" data-lang-en="Pop Game">وبسایت پوپ</div>
+    <div class="lang-wrap">
+      <label for="language-selector" data-lang-fa="زبان" data-lang-en="Language">زبان</label>
+      <select id="language-selector">
+        <option value="fa">فارسی</option>
+        <option value="en">English</option>
+      </select>
     </div>
+  </header>
+
+  <div class="container dashboard-container">
+    <nav class="sidebar">
+      <h2 data-lang-fa="منوی سایت" data-lang-en="Site Menu">منوی سایت</h2>
+      <ul>
+        <li><a href="dashboard.html" class="active" data-lang-fa="صفحه اصلی" data-lang-en="Home">صفحه اصلی</a></li>
+        <li><a href="profile.html" data-lang-fa="صفحه کاربری" data-lang-en="Profile">صفحه کاربری</a></li>
+        <li><a href="contact.html" data-lang-fa="ارتباط با ما" data-lang-en="Contact">ارتباط با ما</a></li>
+        <li><a href="games.html" data-lang-fa="بازی‌ها" data-lang-en="Games">بازی‌ها</a></li>
+        <li><a href="login.html" data-lang-fa="خروج" data-lang-en="Logout">خروج</a></li>
+      </ul>
+    </nav>
+
+    <main class="main-content">
+      <h1 data-lang-fa="خوش آمدی" data-lang-en="Welcome">خوش آمدی</h1>
+      <p data-lang-fa="این پنل کاربری شماست. از منو می‌توانید به بخش‌های مختلف دسترسی داشته باشید." data-lang-en="This is your dashboard. Use the menu to access sections.">این پنل کاربری شماست. از منو می‌توانید به بخش‌های مختلف دسترسی داشته باشید.</p>
+    </main>
+  </div>
+
+  <script src="js/main.js"></script>
 </body>
 </html>
