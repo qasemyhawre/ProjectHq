@@ -1,19 +1,34 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>فراموشی رمز عبور</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title data-lang-fa="بازیابی رمز" data-lang-en="Recover Password">بازیابی رمز</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-    <div class="form-container">
-        <h2>بازیابی رمز عبور</h2>
-        <form id="forgotForm">
-            <input type="email" placeholder="ایمیل خود را وارد کنید" required>
-            <button type="submit">ارسال لینک بازیابی</button>
-        </form>
-        <p>حساب داری؟ <a href="login.html">ورود</a></p>
+<body dir="rtl">
+  <header class="header container">
+    <div class="brand" data-lang-fa="وبسایت پوپ" data-lang-en="Pop Game">وبسایت پوپ</div>
+    <div class="lang-wrap">
+      <label for="language-selector" data-lang-fa="زبان" data-lang-en="Language">زبان</label>
+      <select id="language-selector">
+        <option value="fa">فارسی</option>
+        <option value="en">English</option>
+      </select>
     </div>
+  </header>
+
+  <main class="container">
+    <div class="form-container" style="max-width:420px;margin:auto">
+      <h2 data-lang-fa="بازیابی رمز عبور" data-lang-en="Password recovery">بازیابی رمز عبور</h2>
+      <form id="forgotForm">
+        <input type="email" id="email" data-placeholder-fa="ایمیل خود را وارد کنید" data-placeholder-en="Enter your email" placeholder="ایمیل خود را وارد کنید" required>
+        <button type="submit" data-value-fa="ارسال لینک بازیابی" data-value-en="Send recovery link">ارسال لینک بازیابی</button>
+      </form>
+      <p style="margin-top:12px"><a href="login.html" data-lang-fa="بازگشت به ورود" data-lang-en="Back to Login">بازگشت به ورود</a></p>
+    </div>
+  </main>
+
+  <script src="js/main.js"></script>
 </body>
 </html>
