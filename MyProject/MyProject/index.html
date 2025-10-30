@@ -1,15 +1,32 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>صفحه اصلی</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title data-lang-fa="صفحه اصلی" data-lang-en="Home">صفحه اصلی</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
-<body>
-    <div class="home-container">
-        <h1>به وبسایت ما خوش آمدید!</h1>
-        <p>برای ورود به حساب کاربری <a href="login.html">اینجا کلیک کنید</a></p>
+<body dir="rtl">
+  <header class="header container">
+    <div class="brand" data-lang-fa="وبسایت پوپ" data-lang-en="Pop Game">وبسایت پوپ</div>
+    <div class="lang-wrap">
+      <label for="language-selector" data-lang-fa="زبان" data-lang-en="Language">زبان</label>
+      <select id="language-selector">
+        <option value="fa">فارسی</option>
+        <option value="en">English</option>
+      </select>
     </div>
+  </header>
+
+  <main class="container">
+    <div class="form-container">
+      <h1 data-lang-fa="به وبسایت ما خوش آمدید!" data-lang-en="Welcome to our site!">به وبسایت ما خوش آمدید!</h1>
+      <p data-lang-fa="برای ورود به حساب کاربری اینجا کلیک کنید:" data-lang-en="To login click here:">برای ورود به حساب کاربری اینجا کلیک کنید:</p>
+      <p><a href="login.html" data-lang-fa="ورود" data-lang-en="Login">ورود</a></p>
+      <p><a href="games.html" data-lang-fa="بازی‌ها" data-lang-en="Games">بازی‌ها</a></p>
+    </div>
+  </main>
+
+  <script src="js/main.js"></script>
 </body>
 </html>
