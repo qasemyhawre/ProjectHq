@@ -1,227 +1,152 @@
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #121212;
-    color: #fff;
+/* =========================
+   style.css - RTL / LTR ready
+   ========================= */
+
+/* پایه */
+:root{
+  --bg:#121212;
+  --panel:#1e1e1e;
+  --muted:#aaa;
+  --accent:#4caf50;
+  --neon:#00ff9d;
+  --danger:#ff5252;
+  --text:#ffffff;
 }
 
-.home-container {
-    text-align: center;
-    padding: 100px 20px;
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  direction: rtl; /* پیش‌فرض فارسی */
 }
 
-.home-container a {
-    color: #4caf50;
-    text-decoration: none;
+/* یونیورسال کانتینر */
+.container{max-width:1100px;margin:0 auto;padding:20px}
+
+/* هدر با سوییچر زبان */
+.header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:10px 20px;
+  background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-bottom:1px solid rgba(255,255,255,0.03);
+}
+.brand {font-weight:700;color:var(--accent)}
+.lang-wrap {display:flex;align-items:center;gap:8px}
+#language-selector {padding:6px 8px;border-radius:6px;border:1px solid rgba(255,255,255,0.06);background:transparent;color:var(--text)}
+
+/* فرم‌ها و کارت‌ها */
+.form-container, .panel {
+  background-color: var(--panel);
+  padding:28px;
+  border-radius:12px;
+  box-shadow:0 8px 30px rgba(0,0,0,0.6);
 }
 
-.form-container {
-    background-color: #1e1e1e;
-    padding: 40px;
-    border-radius: 12px;
-    width: 350px;
-    margin: 100px auto;
-    text-align: center;
-    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+/* Inputs */
+input[type="text"], input[type="email"], input[type="password"], textarea, select {
+  width:100%;
+  padding:12px 14px;
+  margin:8px 0;
+  border-radius:8px;
+  border:1px solid rgba(255,255,255,0.03);
+  background:#2a2a2a;
+  color:var(--text);
+  outline:none;
+}
+input::placeholder, textarea::placeholder {color:var(--muted)}
+button {
+  padding:12px 18px;
+  border-radius:8px;
+  border:none;
+  background:var(--accent);
+  color:#fff;
+  cursor:pointer;
+  font-weight:600;
 }
 
-.form-container input {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border: none;
-    border-radius: 8px;
-    background-color: #2a2a2a;
-    color: #fff;
-}
+/* لینک‌ها */
+a {color:var(--accent); text-decoration:none}
 
-.form-container input::placeholder {
-    color: #aaa;
+/* داشبورد و سایدبار */
+.dashboard-container {display:flex; min-height:80vh}
+.sidebar{
+  width:230px;
+  background:var(--panel);
+  padding:26px 18px;
+  border-radius:12px;
+  margin-right:20px; /* در حالت ltr این تبدیل خواهد شد */
 }
+.sidebar h2{color:var(--accent);margin:0 0 12px}
+.sidebar ul{list-style:none;padding:0;margin:0}
+.sidebar li{margin:12px 0}
+.sidebar a{color:var(--text);display:block;padding:8px;border-radius:8px}
+.sidebar a.active, .sidebar a:hover{background:rgba(76,175,80,0.12);color:var(--accent)}
 
-.form-container button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 20px;
-    border: none;
-    border-radius: 8px;
-    background-color: #4caf50;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-}
+/* main content */
+.main-content {flex:1;padding:20px}
 
-.form-container button:hover {
-    background-color: #45a049;
-}
-
-.form-container a {
-    color: #4caf50;
-    text-decoration: none;
-}
-
-/* ========================
-   طراحی داشبورد و منو
-======================== */
-.dashboard-container {
-    display: flex;
-    height: 100vh;
-    background-color: #121212;
-    color: #fff;
-}
-
-.sidebar {
-    width: 220px;
-    background-color: #1e1e1e;
-    padding: 30px 20px;
-    box-shadow: 2px 0 15px rgba(0,0,0,0.5);
-}
-
-.sidebar h2 {
-    margin-bottom: 25px;
-    color: #4caf50;
-    font-size: 22px;
-    text-align: center;
-}
-
-.sidebar ul {
-    list-style: none;
-    padding: 0;
-}
-
-.sidebar ul li {
-    margin: 15px 0;
-}
-
-.sidebar ul li a {
-    color: #fff;
-    text-decoration: none;
-    display: block;
-    padding: 8px 12px;
-    border-radius: 8px;
-    transition: 0.3s;
-}
-
-.sidebar ul li a:hover,
-.sidebar ul li a.active {
-    background-color: #4caf50;
-    color: #fff;
-}
-
-.main-content {
-    flex: 1;
-    padding: 40px;
-}
-
-.main-content h1 {
-    color: #4caf50;
-    margin-bottom: 15px;
-}
-
-.main-content p {
-    color: #ccc;
-    line-height: 1.8;
-    font-size: 16px;
-}
-/* ========================
-   طراحی فرم ارتباط با ما
-======================== */
-.contact-form {
-    background-color: #1e1e1e;
-    padding: 30px;
-    border-radius: 12px;
-    width: 400px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.4);
-}
-
-.contact-form input,
-.contact-form textarea {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border: none;
-    border-radius: 8px;
-    background-color: #2a2a2a;
-    color: #fff;
-}
-
-.contact-form button {
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    background-color: #4caf50;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.contact-form button:hover {
-    background-color: #45a049;
-}
-/* ========================
-   طراحی بازی پوپ
-======================== */
+/* بازی - grid ردیف‌ها */
 .pop-game {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    margin-top: 25px;
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  align-items:center;
 }
 
+/* هر ردیف */
 .row {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
+  display:flex;
+  gap:12px;
+  justify-content:center;
 }
 
+/* خانه‌ها */
 .cell {
-    width: 80px;
-    height: 80px;
-    background-color: #2a2a2a;
-    border-radius: 10px;
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    font-weight: bold;
-    transition: 0.3s;
-    user-select: none;
+  width:88px;height:88px;
+  background:#1b1b1f;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;cursor:pointer;color:#fff;
+  border:2px solid rgba(255,255,255,0.03);
+  transition:all .18s ease;
+  user-select:none;
+}
+.cell:hover{transform:translateY(-4px); box-shadow:0 10px 30px rgba(0,0,0,0.6)}
+.cell.correct{background:linear-gradient(45deg,var(--accent),#007a58); color:#000; font-size:2.2rem}
+.cell.wrong{background:linear-gradient(45deg,var(--danger),#8b0000); color:#fff; font-size:2.2rem}
+
+/* وضعیت و دکمه‌ها */
+#result{margin-top:18px;font-weight:600}
+#restart-btn{margin-top:18px;}
+
+/* styling برای rtl vs ltr */
+/* وقتی body dir="rtl" هست: */
+body[dir="rtl"] .sidebar{ margin-left:0; margin-right:20px }
+body[dir="rtl"] .header {direction:rtl}
+body[dir="rtl"] .brand {text-align:right}
+
+/* وقتی body dir="ltr" هست: */
+body[dir="ltr"] { direction:ltr; text-align:left }
+body[dir="ltr"] .sidebar{ margin-left:20px; margin-right:0 }
+body[dir="ltr"] .header {direction:ltr}
+body[dir="ltr"] .brand {text-align:left}
+
+/* responsive */
+@media (max-width:900px){
+  .dashboard-container{flex-direction:column}
+  .sidebar{width:100%; order:2}
+  .main-content{order:1}
+  .row{flex-wrap:wrap}
+  .cell{width:78px;height:78px}
 }
 
-.cell:hover {
-    background-color: #4caf50;
-}
-
-.cell.correct {
-    background-color: #4caf50;
-}
-
-.cell.wrong {
-    background-color: #ff5252;
-}
-
-.result-text {
-    margin-top: 20px;
-    font-size: 18px;
-    color: #4caf50;
-}
-
-#restart-btn {
-    margin-top: 20px;
-    background-color: #4caf50;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 10px;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-#restart-btn:hover {
-    background-color: #45a049;
-}
+/* کمک برای placeholder فارسی/انگلیسی که از js ست میشه */
+[data-lang-placeholder]{}
+/* پایان */
