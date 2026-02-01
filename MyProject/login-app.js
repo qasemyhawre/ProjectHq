@@ -9,13 +9,18 @@ function LoginApp() {
     
     try {
       const user = await DBUtils.loginUser(email, password);
-      localStorage.setItem('currentUser', JSON.stringify({
-        id: user.objectId,
-        name: user.objectData.Name,
-        email: user.objectData.Email
-      }));
-      window.location.href = 'profile.html';
+      if (user && user.objectId) {
+        localStorage.setItem('currentUser', JSON.stringify({
+          id: user.objectId,
+          name: user.objectData.Name,
+          email: user.objectData.Email
+        }));
+        window.location.href = 'profile.html';
+      } else {
+        setError('ایمیل یا رمز عبور اشتباه است');
+      }
     } catch (err) {
+      console.error('Login error:', err);
       setError(err.message || 'ایمیل یا رمز عبور اشتباه است');
     }
   };
