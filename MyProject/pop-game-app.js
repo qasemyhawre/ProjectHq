@@ -162,8 +162,8 @@ function PopGameApp() {
 
             {gameState === 'countdown' && (
               <div className="text-center py-16">
-                <div className="text-8xl font-bold mb-4" style={{color: 'var(--primary-color)'}}>{countdown}</div>
-                <p className="text-2xl">بازی در حال شروع...</p>
+                <div className="text-8xl font-bold mb-4 animate-pulse bg-gradient-to-r from-purple-600 via-pink-600 to-orange-500 bg-clip-text text-transparent drop-shadow-2xl">{countdown}</div>
+                <p className="text-2xl text-gray-600">بازی در حال شروع...</p>
               </div>
             )}
 
@@ -177,16 +177,16 @@ function PopGameApp() {
                       return (
                         <button key={cellIndex} onClick={() => isActive && selectCell(cellIndex)}
                           disabled={!isActive || isRevealing}
-                          className={`w-24 h-24 rounded-xl text-2xl font-bold transition-all ${
-                            revealed ? (revealed.correct ? 'bg-green-500 text-white' : 'bg-red-500 text-white') :
-                            isActive ? 'bg-gradient-to-br from-purple-400 to-pink-400 text-white hover:scale-105 cursor-pointer' :
-                            'bg-gray-200 text-gray-400'
-                          } ${selectedCell === cellIndex && 'animate-pulse'}`}>
+                          className={`w-24 h-24 rounded-2xl text-2xl font-bold transition-all duration-300 transform ${
+                            revealed ? (revealed.correct ? 'bg-gradient-to-br from-green-400 to-green-600 text-white shadow-lg shadow-green-500/50' : 'bg-gradient-to-br from-red-400 to-red-600 text-white shadow-lg shadow-red-500/50') :
+                            isActive ? 'bg-gradient-to-br from-purple-500 via-pink-500 to-orange-400 text-white hover:scale-110 hover:shadow-2xl hover:shadow-purple-500/50 cursor-pointer' :
+                            'bg-gradient-to-br from-gray-300 to-gray-400 text-gray-500'
+                          } ${selectedCell === cellIndex && 'animate-pulse scale-105 shadow-2xl'}`}>
                           {revealed ? (revealed.correct ? '✓' : '✗') : '?'}
                         </button>
                       );
                     })}
-                    <div className="flex items-center justify-center w-20 text-lg font-bold" style={{color: 'var(--primary-color)'}}>
+                    <div className="flex items-center justify-center w-20 text-lg font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
                       {rowMultipliers[rowIndex]}x
                     </div>
                   </div>
