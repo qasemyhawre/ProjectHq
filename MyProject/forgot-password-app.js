@@ -10,7 +10,7 @@ function ForgotPasswordApp() {
     if (user) {
       setMessage('لینک بازیابی رمز عبور به ایمیل شما ارسال شد');
     } else {
-      setMessage('ایمیل وارد شده پیدا نشد');
+      setMessage('ایمیل وارد شده یافت نشد');
     }
   };
 
