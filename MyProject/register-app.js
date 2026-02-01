@@ -11,16 +11,26 @@ function RegisterApp() {
       return;
     }
     
+    if (formData.password.length < 6) {
+      setError('رمز عبور باید حداقل 6 کاراکتر باشد');
+      return;
+    }
+    
     try {
       const newUser = await DBUtils.registerUser(formData.name, formData.email, formData.password);
-      localStorage.setItem('currentUser', JSON.stringify({
-        id: newUser.objectId,
-        name: newUser.objectData.Name,
-        email: newUser.objectData.Email
-      }));
-      window.location.href = 'profile.html';
+      if (newUser && newUser.objectId) {
+        localStorage.setItem('currentUser', JSON.stringify({
+          id: newUser.objectId,
+          name: newUser.objectData.Name,
+          email: newUser.objectData.Email
+        }));
+        window.location.href = 'profile.html';
+      } else {
+        setError('خطا در ثبت نام. لطفا دوباره تلاش کنید');
+      }
     } catch (err) {
-      setError(err.message || 'خطا در ثبت نام');
+      console.error('Registration error:', err);
+      setError(err.message || 'خطا در ثبت نام. لطفا دوباره تلاش کنید');
     }
   };
 
