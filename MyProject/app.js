@@ -41,11 +41,9 @@ function App() {
     };
 
     const games = [
-      { id: 2, title: 'بازی مار', description: 'مار را هدایت کنید و غذا جمع کنید', icon: 'zap', url: 'snake-game.html' },
-      { id: 3, title: 'بازی 2048', description: 'اعداد را ترکیب کنید و به 2048 برسید', icon: 'grid-3x3', url: '2048-game.html' },
-      { id: 4, title: 'بازی حافظه', description: 'کارت‌های یکسان را پیدا کنید', icon: 'brain', url: 'memory-game.html' },
-      { id: 5, title: 'بازی دوز', description: 'سه تا یک خط! با دوست بازی کنید', icon: 'circle', url: 'tictactoe-game.html' },
-      { id: 1, title: 'بازی حدس عدد', description: 'یک عدد را حدس بزنید و امتیاز کسب کنید', icon: 'dice-5', url: 'game.html' }
+      { id: 1, title: 'بازی حدس عدد', description: 'یک عدد را حدس بزنید و امتیاز کسب کنید', icon: 'dice-5', url: 'game.html' },
+      { id: 6, title: 'بازی الماس', description: 'الماس‌ها را جمع کنید و از موانع بگریزید', icon: 'gem', url: 'diamond-game.html' },
+      { id: 8, title: 'بازی چرخ شانس', description: 'چرخ بچرخان و جایزه ببر!', icon: 'circle-dot', url: 'wheel-game.html' }
     ];
 
     return (
