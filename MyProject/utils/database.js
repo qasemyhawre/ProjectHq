@@ -1,13 +1,17 @@
 const DBUtils = {
   async registerUser(name, email, password) {
     try {
+      console.log('Starting user registration...');
       const existingUsers = await trickleListObjects('user', 100, true);
+      console.log('Existing users fetched:', existingUsers);
+      
       const userExists = existingUsers.items.find(u => u.objectData.Email === email);
       
       if (userExists) {
         throw new Error('این ایمیل قبلاً ثبت شده است');
       }
 
+      console.log('Creating new user...');
       const newUser = await trickleCreateObject('user', {
         Name: name,
         Email: email,
@@ -16,6 +20,7 @@ const DBUtils = {
         GamesPlayed: 0
       });
 
+      console.log('User created successfully:', newUser);
       return newUser;
     } catch (error) {
       console.error('خطا در ثبت نام:', error);
